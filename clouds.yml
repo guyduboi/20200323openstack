@@ -1,0 +1,13 @@
+---
+clouds:
+  alta3cloud:
+    auth:
+      username: admin
+      password: "0ae012784ad849a6"
+      auth_url: "http://10.7.89.226:5000/v3"
+      project_name: admin
+      user_domain_name: Default
+      project_domain_name: Default
+    identity_api_version: 3
+    region_name: RegionOne
+ 
