@@ -1,0 +1,34 @@
+---
+- name: A playbook to DL images and then UL to OpenStack Glance
+  hosts: localhost
+
+  vars:
+    img_to_dl: "https://cloud-images.ubuntu.com/focal/20200322/focal-server-cloudimg-amd64-disk-kvm.img"
+    
+  tasks:
+
+# create a temp folder to DL to
+
+  # DL image that will be uploaded to OpenStack Glance
+  - name: Download our image "{{ img_to_dl }}"
+    get url:
+      url: "{{ img_to_dl }}"
+      dest: /home/centos/ans/
+
+  #uploade to OpenStack Glance (image service)
+  - name: Upload the image "{{ img_to_dl }}"
+    os_image:
+      cloud: alta3cloud   #This is a reference to creds in clouds.yml
+      name: cirros  ### <<-- Learn how to strip out vlues from our url
+      container_format: bare
+      disk_format: qcow2
+      state: present
+      filename: cirros-0.3.0-x86_64-disk.img
+      # kernel: cirros-vmlinux
+      # ramdisk: cirros-initrd
+      properties:
+        cpu_arch: x86_64
+        distro: ubuntu
+
+
+  #Determin if checksum on upload matches what we expected

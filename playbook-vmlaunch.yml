@@ -1,0 +1,68 @@
+---
+- name: Our first playbook (first play)
+  hosts: localhost
+
+  vars:   # Lets define some variables
+    present_or_absent: present   # this variable can be changed to control if the playbook adds or removes infrastructure
+
+  tasks:
+
+    - name: Use Ansible to "openstack image list" 
+      os_image_info:  # Call to os_image.py <-- installed with ansible
+        cloud: alta3cloud  # this is a reference to creds in clouds.yml
+      register: result  # create a car called result and save the results
+
+    - name: Show images
+      debug:  # call to debug.py <-- installed with ansible, prints to the screen
+        verbosity: 1 # weshow one -v it wont show but 2 -vv will show
+        msg: "{{ result.openstack_image[0].id }}"
+    #msg: "{{ result.openstack_image[0].name }}"
+
+    - name: Use Ansible to "openstack flavor list" 
+      os_flavor_info:  # call to os_flavor_info.py <-- installed with ansible
+        cloud: alta3cloud  # this is a reference to creds in clouds.yml
+      register: flav_result  # create a var called flav_result and save the results
+
+    - name: PRECHECK - FAIL if image name does not contain 'cirros'
+      fail:
+        msg: "the image {{ result.openstack_image[0].id }} does not contain the name cirros.   Exiting..."
+      when: "'cirros' not in result.openstack_image[0].name"   #in when variables dont get {{}} around them
+
+    - name: Show flavors
+      debug:  # call to debug.py <-- installed with ansible, prints to the screena
+        verbosity: 1
+        msg: "{{ flav_result.openstack_flavors[0].id  }}"
+    #msg: "{{ result.openstack_flavors[0].name }}"  
+
+    - name: PRECHECK - FAIL if flavor is not 512 ram and 1 vcpu
+      fail:
+        msg: "{{ flav_result.openstack_flavors[0].id }}"
+      when: flav_result.openstack_flavors[0].ram != 512 or flav_result.openstack_flavors[0].vcpus != 1
+
+    - name: Generate an OpenSSH keypair that we can upload to OpenStack
+      openssh_keypair:
+        path: /home/centos/.ssh/id_rsa_openstack
+
+    # Generates a key pair with the running users public key
+    - name: "Openstack Keypair - making... {{ present_or_absent }}" 
+      os_keypair:
+        cloud: alta3cloud  # this is a reference to creds in clouds.yml
+        state: "{{ present_or_absent }}"   # This is defined in the vars section - create or remove this resource
+        name: a3c_ansible_key  # name of the key to store in the openstack cloud
+        public_key_file: /home/centos/.ssh/id_rsa_openstack.pub # this is the public key file to upload to openstack
+
+    - name:  "OpenStack VM - making... {{ present_or_absent }}"
+      register: vm_results
+      os_server:
+        cloud: alta3cloud  # this is a reference to creds in clouds.yml
+        state: "{{ present_or_absent }}"  # this is defined up in the vars section - VM to be created or removed
+        name: ansible_vml  # name of the VM in the cloud
+        image: "{{ result.openstack_image[0].id }}"
+        flavor: "{{ flav_result.openstack_flavors[0].id }}"
+        key_name: a3c_ansible_key  #this must match the name of an available key within the OpenStack cloud
+                                  #allows SSH to the machine without a password (RSA keying)
+    - name: Show results of how VM launched
+      debug:
+        msg: "{{ vm_results }}"
+        verbosity: 1
+#
