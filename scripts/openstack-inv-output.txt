@@ -1,0 +1,436 @@
+{
+  "RegionOne": [
+    "f87416c2-41c9-41d2-a555-9625dd604cc8", 
+    "a5b4579c-0954-43d5-b122-6ceffb8794be"
+  ], 
+  "RegionOne_nova": [
+    "f87416c2-41c9-41d2-a555-9625dd604cc8", 
+    "a5b4579c-0954-43d5-b122-6ceffb8794be"
+  ], 
+  "_meta": {
+    "hostvars": {
+      "a5b4579c-0954-43d5-b122-6ceffb8794be": {
+        "ansible_host": "172.24.4.103", 
+        "ansible_ssh_host": "172.24.4.103", 
+        "openstack": {
+          "OS-DCF:diskConfig": "MANUAL", 
+          "OS-EXT-AZ:availability_zone": "nova", 
+          "OS-EXT-SRV-ATTR:hypervisor_hostname": "os-536-uc.localdomain", 
+          "OS-EXT-SRV-ATTR:instance_name": "instance-00000003", 
+          "OS-EXT-SRV-ATTR:user_data": null, 
+          "OS-EXT-STS:power_state": 1, 
+          "OS-EXT-STS:task_state": null, 
+          "OS-EXT-STS:vm_state": "active", 
+          "OS-SCH-HNT:scheduler_hints": null, 
+          "OS-SRV-USG:launched_at": "2020-03-24T18:56:40.000000", 
+          "OS-SRV-USG:terminated_at": null, 
+          "accessIPv4": "172.24.4.103", 
+          "accessIPv6": "", 
+          "addresses": {
+            "public": [
+              {
+                "OS-EXT-IPS-MAC:mac_addr": "fa:16:3e:80:cc:68", 
+                "OS-EXT-IPS:type": "fixed", 
+                "addr": "172.24.4.103", 
+                "version": 4
+              }
+            ]
+          }, 
+          "adminPass": null, 
+          "az": "nova", 
+          "block_device_mapping": null, 
+          "cloud": "envvars", 
+          "config_drive": "", 
+          "created": "2020-03-24T18:56:28Z", 
+          "created_at": "2020-03-24T18:56:28Z", 
+          "disk_config": "MANUAL", 
+          "flavor": {
+            "id": "1", 
+            "name": "m1.tiny"
+          }, 
+          "has_config_drive": false, 
+          "hostId": "3468619d867e4ffa11e5c3c104b836a85efba38a05052cc1e04912b8", 
+          "host_id": "3468619d867e4ffa11e5c3c104b836a85efba38a05052cc1e04912b8", 
+          "hypervisor_hostname": "os-536-uc.localdomain", 
+          "id": "a5b4579c-0954-43d5-b122-6ceffb8794be", 
+          "image": {
+            "id": "d98b455a-97ae-4e1f-b928-484ab012148d", 
+            "name": "cirros"
+          }, 
+          "instance_name": "instance-00000003", 
+          "interface_ip": "172.24.4.103", 
+          "key_name": "a3c_ansible_key", 
+          "launched_at": "2020-03-24T18:56:40.000000", 
+          "location": {
+            "cloud": "envvars", 
+            "project": {
+              "domain_id": null, 
+              "domain_name": "Default", 
+              "id": "608e754d1c9b4e428b3bb1c88caa8ef2", 
+              "name": "admin"
+            }, 
+            "region_name": "RegionOne", 
+            "zone": "nova"
+          }, 
+          "metadata": {}, 
+          "name": "ansible_vml", 
+          "networks": {}, 
+          "os-extended-volumes:volumes_attached": [], 
+          "personality": null, 
+          "power_state": 1, 
+          "private_v4": "", 
+          "progress": 0, 
+          "project_id": "608e754d1c9b4e428b3bb1c88caa8ef2", 
+          "properties": {
+            "OS-DCF:diskConfig": "MANUAL", 
+            "OS-EXT-AZ:availability_zone": "nova", 
+            "OS-EXT-SRV-ATTR:hypervisor_hostname": "os-536-uc.localdomain", 
+            "OS-EXT-SRV-ATTR:instance_name": "instance-00000003", 
+            "OS-EXT-SRV-ATTR:user_data": null, 
+            "OS-EXT-STS:power_state": 1, 
+            "OS-EXT-STS:task_state": null, 
+            "OS-EXT-STS:vm_state": "active", 
+            "OS-SCH-HNT:scheduler_hints": null, 
+            "OS-SRV-USG:launched_at": "2020-03-24T18:56:40.000000", 
+            "OS-SRV-USG:terminated_at": null, 
+            "os-extended-volumes:volumes_attached": []
+          }, 
+          "public_v4": "172.24.4.103", 
+          "public_v6": "", 
+          "region": "RegionOne", 
+          "scheduler_hints": null, 
+          "security_groups": [
+            {
+              "description": "Default security group", 
+              "id": "b301ab68-62ee-413b-865f-de99f984c557", 
+              "location": {
+                "cloud": "envvars", 
+                "project": {
+                  "domain_id": null, 
+                  "domain_name": "Default", 
+                  "id": "608e754d1c9b4e428b3bb1c88caa8ef2", 
+                  "name": "admin"
+                }, 
+                "region_name": "RegionOne", 
+                "zone": null
+              }, 
+              "name": "default", 
+              "project_id": "608e754d1c9b4e428b3bb1c88caa8ef2", 
+              "properties": {}, 
+              "security_group_rules": [
+                {
+                  "direction": "ingress", 
+                  "ethertype": "IPv4", 
+                  "group": {
+                    "name": "default", 
+                    "tenant_id": "608e754d1c9b4e428b3bb1c88caa8ef2"
+                  }, 
+                  "id": "7c7ded1b-32fe-45e2-a78e-a63cceefdd47", 
+                  "location": {
+                    "cloud": "envvars", 
+                    "project": {
+                      "domain_id": null, 
+                      "domain_name": "Default", 
+                      "id": "608e754d1c9b4e428b3bb1c88caa8ef2", 
+                      "name": "admin"
+                    }, 
+                    "region_name": "RegionOne", 
+                    "zone": null
+                  }, 
+                  "port_range_max": null, 
+                  "port_range_min": null, 
+                  "project_id": "", 
+                  "properties": {
+                    "group": {
+                      "name": "default", 
+                      "tenant_id": "608e754d1c9b4e428b3bb1c88caa8ef2"
+                    }
+                  }, 
+                  "protocol": null, 
+                  "remote_group_id": null, 
+                  "remote_ip_prefix": null, 
+                  "security_group_id": "b301ab68-62ee-413b-865f-de99f984c557", 
+                  "tenant_id": ""
+                }, 
+                {
+                  "direction": "ingress", 
+                  "ethertype": "IPv4", 
+                  "group": {
+                    "name": "default", 
+                    "tenant_id": "608e754d1c9b4e428b3bb1c88caa8ef2"
+                  }, 
+                  "id": "ff1994f1-a8ed-4bc0-9bb7-be64def1ea36", 
+                  "location": {
+                    "cloud": "envvars", 
+                    "project": {
+                      "domain_id": null, 
+                      "domain_name": "Default", 
+                      "id": "608e754d1c9b4e428b3bb1c88caa8ef2", 
+                      "name": "admin"
+                    }, 
+                    "region_name": "RegionOne", 
+                    "zone": null
+                  }, 
+                  "port_range_max": null, 
+                  "port_range_min": null, 
+                  "project_id": "", 
+                  "properties": {
+                    "group": {
+                      "name": "default", 
+                      "tenant_id": "608e754d1c9b4e428b3bb1c88caa8ef2"
+                    }
+                  }, 
+                  "protocol": null, 
+                  "remote_group_id": null, 
+                  "remote_ip_prefix": null, 
+                  "security_group_id": "b301ab68-62ee-413b-865f-de99f984c557", 
+                  "tenant_id": ""
+                }
+              ], 
+              "tenant_id": "608e754d1c9b4e428b3bb1c88caa8ef2"
+            }
+          ], 
+          "status": "ACTIVE", 
+          "tags": [], 
+          "task_state": null, 
+          "tenant_id": "608e754d1c9b4e428b3bb1c88caa8ef2", 
+          "terminated_at": null, 
+          "updated": "2020-03-24T18:56:41Z", 
+          "user_data": null, 
+          "user_id": "57926d57eeda4edcbe2383fd64b23448", 
+          "vm_state": "active", 
+          "volumes": []
+        }
+      }, 
+      "f87416c2-41c9-41d2-a555-9625dd604cc8": {
+        "ansible_host": "172.24.4.89", 
+        "ansible_ssh_host": "172.24.4.89", 
+        "openstack": {
+          "OS-DCF:diskConfig": "MANUAL", 
+          "OS-EXT-AZ:availability_zone": "nova", 
+          "OS-EXT-SRV-ATTR:hypervisor_hostname": "os-536-uc.localdomain", 
+          "OS-EXT-SRV-ATTR:instance_name": "instance-00000002", 
+          "OS-EXT-SRV-ATTR:user_data": null, 
+          "OS-EXT-STS:power_state": 1, 
+          "OS-EXT-STS:task_state": null, 
+          "OS-EXT-STS:vm_state": "active", 
+          "OS-SCH-HNT:scheduler_hints": null, 
+          "OS-SRV-USG:launched_at": "2020-03-24T16:27:54.000000", 
+          "OS-SRV-USG:terminated_at": null, 
+          "accessIPv4": "172.24.4.89", 
+          "accessIPv6": "", 
+          "addresses": {
+            "public": [
+              {
+                "OS-EXT-IPS-MAC:mac_addr": "fa:16:3e:c2:31:51", 
+                "OS-EXT-IPS:type": "fixed", 
+                "addr": "172.24.4.89", 
+                "version": 4
+              }
+            ]
+          }, 
+          "adminPass": null, 
+          "az": "nova", 
+          "block_device_mapping": null, 
+          "cloud": "envvars", 
+          "config_drive": "", 
+          "created": "2020-03-24T16:27:41Z", 
+          "created_at": "2020-03-24T16:27:41Z", 
+          "disk_config": "MANUAL", 
+          "flavor": {
+            "id": "1", 
+            "name": "m1.tiny"
+          }, 
+          "has_config_drive": false, 
+          "hostId": "3468619d867e4ffa11e5c3c104b836a85efba38a05052cc1e04912b8", 
+          "host_id": "3468619d867e4ffa11e5c3c104b836a85efba38a05052cc1e04912b8", 
+          "hypervisor_hostname": "os-536-uc.localdomain", 
+          "id": "f87416c2-41c9-41d2-a555-9625dd604cc8", 
+          "image": {
+            "id": "d98b455a-97ae-4e1f-b928-484ab012148d", 
+            "name": "cirros"
+          }, 
+          "instance_name": "instance-00000002", 
+          "interface_ip": "172.24.4.89", 
+          "key_name": "a3c_ansible_key", 
+          "launched_at": "2020-03-24T16:27:54.000000", 
+          "location": {
+            "cloud": "envvars", 
+            "project": {
+              "domain_id": null, 
+              "domain_name": "Default", 
+              "id": "608e754d1c9b4e428b3bb1c88caa8ef2", 
+              "name": "admin"
+            }, 
+            "region_name": "RegionOne", 
+            "zone": "nova"
+          }, 
+          "metadata": {}, 
+          "name": "ansible_vm1", 
+          "networks": {}, 
+          "os-extended-volumes:volumes_attached": [], 
+          "personality": null, 
+          "power_state": 1, 
+          "private_v4": "", 
+          "progress": 0, 
+          "project_id": "608e754d1c9b4e428b3bb1c88caa8ef2", 
+          "properties": {
+            "OS-DCF:diskConfig": "MANUAL", 
+            "OS-EXT-AZ:availability_zone": "nova", 
+            "OS-EXT-SRV-ATTR:hypervisor_hostname": "os-536-uc.localdomain", 
+            "OS-EXT-SRV-ATTR:instance_name": "instance-00000002", 
+            "OS-EXT-SRV-ATTR:user_data": null, 
+            "OS-EXT-STS:power_state": 1, 
+            "OS-EXT-STS:task_state": null, 
+            "OS-EXT-STS:vm_state": "active", 
+            "OS-SCH-HNT:scheduler_hints": null, 
+            "OS-SRV-USG:launched_at": "2020-03-24T16:27:54.000000", 
+            "OS-SRV-USG:terminated_at": null, 
+            "os-extended-volumes:volumes_attached": []
+          }, 
+          "public_v4": "172.24.4.89", 
+          "public_v6": "", 
+          "region": "RegionOne", 
+          "scheduler_hints": null, 
+          "security_groups": [
+            {
+              "description": "Default security group", 
+              "id": "b301ab68-62ee-413b-865f-de99f984c557", 
+              "location": {
+                "cloud": "envvars", 
+                "project": {
+                  "domain_id": null, 
+                  "domain_name": "Default", 
+                  "id": "608e754d1c9b4e428b3bb1c88caa8ef2", 
+                  "name": "admin"
+                }, 
+                "region_name": "RegionOne", 
+                "zone": null
+              }, 
+              "name": "default", 
+              "project_id": "608e754d1c9b4e428b3bb1c88caa8ef2", 
+              "properties": {}, 
+              "security_group_rules": [
+                {
+                  "direction": "ingress", 
+                  "ethertype": "IPv4", 
+                  "group": {
+                    "name": "default", 
+                    "tenant_id": "608e754d1c9b4e428b3bb1c88caa8ef2"
+                  }, 
+                  "id": "7c7ded1b-32fe-45e2-a78e-a63cceefdd47", 
+                  "location": {
+                    "cloud": "envvars", 
+                    "project": {
+                      "domain_id": null, 
+                      "domain_name": "Default", 
+                      "id": "608e754d1c9b4e428b3bb1c88caa8ef2", 
+                      "name": "admin"
+                    }, 
+                    "region_name": "RegionOne", 
+                    "zone": null
+                  }, 
+                  "port_range_max": null, 
+                  "port_range_min": null, 
+                  "project_id": "", 
+                  "properties": {
+                    "group": {
+                      "name": "default", 
+                      "tenant_id": "608e754d1c9b4e428b3bb1c88caa8ef2"
+                    }
+                  }, 
+                  "protocol": null, 
+                  "remote_group_id": null, 
+                  "remote_ip_prefix": null, 
+                  "security_group_id": "b301ab68-62ee-413b-865f-de99f984c557", 
+                  "tenant_id": ""
+                }, 
+                {
+                  "direction": "ingress", 
+                  "ethertype": "IPv4", 
+                  "group": {
+                    "name": "default", 
+                    "tenant_id": "608e754d1c9b4e428b3bb1c88caa8ef2"
+                  }, 
+                  "id": "ff1994f1-a8ed-4bc0-9bb7-be64def1ea36", 
+                  "location": {
+                    "cloud": "envvars", 
+                    "project": {
+                      "domain_id": null, 
+                      "domain_name": "Default", 
+                      "id": "608e754d1c9b4e428b3bb1c88caa8ef2", 
+                      "name": "admin"
+                    }, 
+                    "region_name": "RegionOne", 
+                    "zone": null
+                  }, 
+                  "port_range_max": null, 
+                  "port_range_min": null, 
+                  "project_id": "", 
+                  "properties": {
+                    "group": {
+                      "name": "default", 
+                      "tenant_id": "608e754d1c9b4e428b3bb1c88caa8ef2"
+                    }
+                  }, 
+                  "protocol": null, 
+                  "remote_group_id": null, 
+                  "remote_ip_prefix": null, 
+                  "security_group_id": "b301ab68-62ee-413b-865f-de99f984c557", 
+                  "tenant_id": ""
+                }
+              ], 
+              "tenant_id": "608e754d1c9b4e428b3bb1c88caa8ef2"
+            }
+          ], 
+          "status": "ACTIVE", 
+          "tags": [], 
+          "task_state": null, 
+          "tenant_id": "608e754d1c9b4e428b3bb1c88caa8ef2", 
+          "terminated_at": null, 
+          "updated": "2020-03-24T16:27:54Z", 
+          "user_data": null, 
+          "user_id": "57926d57eeda4edcbe2383fd64b23448", 
+          "vm_state": "active", 
+          "volumes": []
+        }
+      }
+    }
+  }, 
+  "ansible_vm1": [
+    "f87416c2-41c9-41d2-a555-9625dd604cc8"
+  ], 
+  "ansible_vml": [
+    "a5b4579c-0954-43d5-b122-6ceffb8794be"
+  ], 
+  "envvars": [
+    "f87416c2-41c9-41d2-a555-9625dd604cc8", 
+    "a5b4579c-0954-43d5-b122-6ceffb8794be"
+  ], 
+  "envvars_RegionOne": [
+    "f87416c2-41c9-41d2-a555-9625dd604cc8", 
+    "a5b4579c-0954-43d5-b122-6ceffb8794be"
+  ], 
+  "envvars_RegionOne_nova": [
+    "f87416c2-41c9-41d2-a555-9625dd604cc8", 
+    "a5b4579c-0954-43d5-b122-6ceffb8794be"
+  ], 
+  "flavor-m1.tiny": [
+    "f87416c2-41c9-41d2-a555-9625dd604cc8", 
+    "a5b4579c-0954-43d5-b122-6ceffb8794be"
+  ], 
+  "image-cirros": [
+    "f87416c2-41c9-41d2-a555-9625dd604cc8", 
+    "a5b4579c-0954-43d5-b122-6ceffb8794be"
+  ], 
+  "instance-a5b4579c-0954-43d5-b122-6ceffb8794be": [
+    "a5b4579c-0954-43d5-b122-6ceffb8794be"
+  ], 
+  "instance-f87416c2-41c9-41d2-a555-9625dd604cc8": [
+    "f87416c2-41c9-41d2-a555-9625dd604cc8"
+  ], 
+  "nova": [
+    "f87416c2-41c9-41d2-a555-9625dd604cc8", 
+    "a5b4579c-0954-43d5-b122-6ceffb8794be"
+  ]
+}

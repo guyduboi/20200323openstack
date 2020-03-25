@@ -1,0 +1,35 @@
+---
+#create a temp folder to DL to
+- name: Create a temp folder to DL to
+  file:
+    state: directory
+    path: "{{ tempdir }}" # reference to a variable that contains the temp directory that will house our DLed image
+
+# DownLoad image that will be uploaded to OpenStack Glance
+- name: Download the image "{{ img_to_dl }}"
+  get_url:
+    url: "{{ img_to_dl }}"
+    dest: "{{ tempdir }}" #this is the dir to store download image in
+
+#uploade to OpenStack Glance (image service)
+- name: Upload the image "{{ img_to_dl }}"
+  os_image:
+    cloud: alta3cloud   #This is a reference to creds in clouds.yml
+    name: "{{ imgdate }}-{{ imgname.split('.')[0] }}"  # merge imgdate with "just" name portion of image (drop the .img) 
+    container_format: bare
+    disk_format: qcow2
+    state: present
+    filename: "{{ tempdir }}{{ imgname }}"
+    # kernel: cirros-vmlinux
+    # ramdisk: cirros-initrd
+    properties:
+      cpu_arch: x86_64
+      distro: ubuntu
+
+#Determin if checksum on upload matches what we expected#
+
+#delete the temporary dir
+- name:
+  file:
+    state: absent
+    path: "{{ tempdir }}"

@@ -1,0 +1,11 @@
+---
+# user must supple this from https://cloud-images.ubuntu.com/
+img_to_dl: "https://cloud-images.ubuntu.com/focal/20200322/focal-server-cloudimg-amd64-disk-kvm.img"
+
+ansible_python_interpreter: "/usr/bin/python"
+tempdir: "/home/centos/image_temp/"
+
+imgname: "{{ img_to_dl.split('/')[-1] }}"   #This is the split command on URL to get fields individually
+imgdate: "{{ img_to_dl.split('/')[-2] }}"  # same as above
+
+
