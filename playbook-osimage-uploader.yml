@@ -1,34 +1,51 @@
 ---
 - name: A playbook to DL images and then UL to OpenStack Glance
   hosts: localhost
-
+  connection: local
+  
   vars:
     img_to_dl: "https://cloud-images.ubuntu.com/focal/20200322/focal-server-cloudimg-amd64-disk-kvm.img"
     
+    ansible_python_interpreter: "/usr/bin/python"
+    
+    tempdir: "/home/centos/image_temp/"
+
+    imgname: "{{ img_to_dl.split('/')[-1] }}"   #This is the split command on URL to get fields individually
+    imgdate: "{{ img_to_dl.split('/')[-2] }}"  # same as above
+
   tasks:
+  
+    #create a temp folder to DL to
+    - name: Create a temp folder to DL to
+      file:
+        state: directory
+        path: "{{ tempdir }}" # reference to a variable that contains the temp directory that will house our DLed image
 
-# create a temp folder to DL to
+    # DownLoad image that will be uploaded to OpenStack Glance
+    - name: Download the image "{{ img_to_dl }}"
+      get_url:
+        url: "{{ img_to_dl }}"
+        dest: "{{ tempdir }}" #this is the dir to store download image in
 
-  # DL image that will be uploaded to OpenStack Glance
-  - name: Download our image "{{ img_to_dl }}"
-    get url:
-      url: "{{ img_to_dl }}"
-      dest: /home/centos/ans/
+    #uploade to OpenStack Glance (image service)
+    - name: Upload the image "{{ img_to_dl }}"
+      os_image:
+        cloud: alta3cloud   #This is a reference to creds in clouds.yml
+        name: "{{ imgdate }}-{{ imgname.split('.')[0] }}"  # merge imgdate with "just" name portion of image (drop the .img) 
+        container_format: bare
+        disk_format: qcow2
+        state: present
+        filename: "{{ tempdir }}{{ imgname }}"
+        # kernel: cirros-vmlinux
+        # ramdisk: cirros-initrd
+        properties:
+          cpu_arch: x86_64
+          distro: ubuntu
 
-  #uploade to OpenStack Glance (image service)
-  - name: Upload the image "{{ img_to_dl }}"
-    os_image:
-      cloud: alta3cloud   #This is a reference to creds in clouds.yml
-      name: cirros  ### <<-- Learn how to strip out vlues from our url
-      container_format: bare
-      disk_format: qcow2
-      state: present
-      filename: cirros-0.3.0-x86_64-disk.img
-      # kernel: cirros-vmlinux
-      # ramdisk: cirros-initrd
-      properties:
-        cpu_arch: x86_64
-        distro: ubuntu
-
-
-  #Determin if checksum on upload matches what we expected
+    #Determin if checksum on upload matches what we expected#
+  
+    #delete the temporary dir
+    - name:
+      file:
+        state: absent
+        path: "{{ tempdir }}"
