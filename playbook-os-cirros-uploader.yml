@@ -1,0 +1,36 @@
+---
+
+- name: Playbook to upload cirros image to Openstack
+  hosts: localhost
+
+  vars:
+    urltocirros: http://download.cirros-cloud.net/0.5.1/cirros-0.5.1-x86_64-disk.img 
+    ansible_python_interpreter: /usr/bin/python
+
+  tasks:
+    - name: create temp directory to store image
+      file:
+        state: directory
+        path: /home/centos/tempimg/
+
+    - name: download the image to our temp directory
+      get_url:
+        url: "{{ urltocirros }}"
+        dest: /home/centos/tempimg/
+
+    - name: upload image to openstack
+      os_image:
+        cloud: alta3cloud   # This is a ref to the creds in clouds.yml
+        name: cirros-05
+        container_format: bare
+        disk_format: qcow2
+        state: present
+        filename: /home/centos/tempimg/cirros-0.5.1-x86_64-disk.img
+        properties:
+          cpu_arch: x86_64
+          distro: ubuntu
+
+    - name: remove our temp directory
+      file:
+        state: absent
+        path: /home/centos/tempimg/  

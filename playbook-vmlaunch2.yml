@@ -1,0 +1,101 @@
+---
+- name: Launch a VM with injected KeyPair on Demo-Net
+  hosts: localhost   # normally this is IP address(s) of the host(s) to connect to
+
+  vars:
+    present_or_absent: present   # this variable can be changed to control if the playbook adds or removes
+                                 # infastructure
+
+  tasks:
+
+    - name: Use Ansible to "openstack image list" 
+      os_image_info:    # call to os_image_info.py <-- installed with ansible
+        cloud: alta3cloud   # this is a reference to creds in clouds.yml
+      register: result   # create a var called result and save the results
+
+    - name: Show images
+      debug:     # call to debug.py <--- installed with ansible, prints to the screen
+        verbosity: 1   # we must throw -v to show this value
+        msg: "{{ result.openstack_image[0].id }}"    # this produces the UUID of the image
+         #msg: "{{ result.openstack_image[0].name }}"   # this produces the "human name" of the image
+   
+    - name: PRECHECK - FAIL if image name does not contain 'cirros-05'
+      fail:
+        msg: "The image {{ result.openstack_image[0].id }} does not contain the name cirros-05. Exiting..."
+      when: "'cirros-05' not in result.openstack_image[0].name"
+
+    - name: Use Ansible to "openstack flavor list"
+      os_flavor_info:    # call to os_flavor_info.py <-- installed with ansible
+        cloud: alta3cloud   # this is a reference to creds in clouds.yml
+      register: flav_result  # create a var called flav_result and save the results
+      
+    - name: Show flavors
+      debug:  # call to debug.py <-- installed with ansible, prints to the screen
+        verbosity: 1     # we must throw -v to show this value
+        msg: "{{ flav_result.openstack_flavors[0].id }}"
+         #msg: "{{ result.openstack_flavors[0].name }}"   # this produces the "human name" of the image
+
+    - name: PRECHECK - FAIL if flavor is not 512 ram and 1 vcpu
+      fail:
+        msg: "The flavor {{ flav_result.openstack_flavors[0].id }} is not 512mb of RAM or not 1 VCPU"
+      when: flav_result.openstack_flavors[0].ram != 512 or flav_result.openstack_flavors[0].vcpus != 1
+
+    # Generate an OpenSSH keypair with the default values (4096 bits, rsa)
+    - name: Generate an OpenSSH keypair that we can upload to OpenStack
+      openssh_keypair:
+        path: /home/centos/.ssh/id_rsa_openstack
+
+    # Creates a key pair with the running users public key
+    - name: "OpenStack Keypair - making... {{ present_or_absent }}"
+      os_keypair:
+        cloud: alta3cloud   # this is a reference to creds in clouds.yml
+        state: "{{ present_or_absent }}"      # create or remove this resource
+        name: a3c_ansible_key    # name of the key to store in openstack cloud
+        public_key_file: /home/centos/.ssh/id_rsa_openstack.pub   # this is the public key file to upload to openstack
+
+    - name: "OpenStack Security Group - making... {{ present_or_absent }}"
+      os_security_group:
+        cloud: alta3cloud
+        state: "{{ present_or_absent }}"
+        name: ssh-icmp
+
+    - name: "OpenStack Secruity Group Rule - making... {{ present_or_absent }}"
+      os_security_group_rule:
+        cloud: alta3cloud
+        security_group: ssh-icmp
+        protocol: icmp
+        remote_ip_prefix: 0.0.0.0/0
+#      loop: [icmp, ssh]
+
+    - name: "OpenStack Secruity Group Rule - making... {{ present_or_absent }}"
+      os_security_group_rule:
+        cloud: alta3cloud
+        security_group: ssh-icmp
+        protocol: tcp
+        port_range_min: 22
+        port_range_max: 22
+        remote_ip_prefix: 0.0.0.0/0
+    
+    - name: "OpenStack VM - making... {{ present_or_absent }}"
+      register: vm_results
+      os_server:
+        security_groups: ssh-icmp
+        network: demo-net
+        cloud: alta3cloud   # this is a reference to creds in clouds.yml
+        state: "{{ present_or_absent }}" # VM to be created or removed
+        name: ansible_vm1   # name of the VM in the cloud
+        image: "{{ result.openstack_image[0].id }}"
+        flavor: "{{ flav_result.openstack_flavors[0].id }}"
+        key_name: a3c_ansible_key   # this must match the name of an available key within the OpenStack cloud
+                                    # allows SSH to to the machine without a password (RSA keying)
+                                    #
+    - name: "OpenStack Floating IP on VM - making {{ present_or_absent }}"
+      os_floating_ip:
+        cloud: alta3cloud
+        server: ansible_vm1
+        state: "{{ present_or_absent }}"
+
+    - name: Show results of how VM launched
+      debug:
+        msg: "{{ vm_results }}"
+        verbosity: 1 

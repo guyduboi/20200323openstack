@@ -1,0 +1,38 @@
+---
+- name:  A playbook to deploy a simple openstack network
+  hosts: localhost
+
+  vars:
+    aop: present  #aop = absent or present
+
+  tasks:
+  - name: Create demo-net network
+    os_network:
+      cloud: alta3cloud
+      state: "{{ aop }}"
+      name: demo-net # name of the network to create
+      external: false
+
+  - name: Manage demo-net-subnet
+    os_subnet:
+      cloud: alta3cloud  # call to creds
+      state: "{{ aop }}"
+      network_name: demo-net  # This ties our subnet to the netowrk we created with os_network
+      name: demo-net-subnet # This is a very logical; name that connects the os_subnet to the os_nbetowrk in the readers mind
+      cidr: 192.168.30.0/24
+      dns_nameservers:
+        - 10.0.0.1
+      #host_routes:
+      #  - destination: 0.0.0.0/0
+      #    nexthop: 192.168.1.1
+    # gateway_ip: 192.168.30.1
+    # ignore_errors: yes
+
+  - name: Manage demorouter router
+    os_router:
+      state: "{{ aop }}"
+      cloud: alta3cloud  # call to cred
+      name: demorouter
+      network: public 
+      interfaces:
+        - demo-net-subnet
