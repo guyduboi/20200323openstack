@@ -1,0 +1,23 @@
+---
+- name: A playbook to install applications
+  hosts: localhost  # This should be the IP addresses of our VM\s in the cloud
+
+# default gather_facts: yes
+  gather_facts: yes  # This grabs "FACTS" (defines variables) that can be recalled in the playbook
+
+  tasks:
+  - name: install epel-release
+    yum:  #  This is the modules name
+      name: epel-release # This is what we want to install
+      state: present  # we want ele-release to be installed (present)
+    become: yes  # This causes a TASK to run as SUDO
+    vars:
+      ansible_python_interpreter: /usr/bin/python  
+
+  - name:  install an app or two
+    yum:
+      name: [moon-buggy, sl, figlet]
+      state: present
+    become: yes
+    vars:
+      ansible_python_interpreter: /usr/bin/python 
